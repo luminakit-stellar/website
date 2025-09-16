@@ -156,14 +156,35 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div style={{
-      fontFamily: 'system-ui, -apple-system, sans-serif',
-      margin: 0,
-      padding: 0,
-      backgroundColor: '#f6f7f8',
-      minHeight: '100vh',
-      width: '100%'
-    }}>
+    <>
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .features-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+              padding: 0 0.5rem !important;
+            }
+            .feature-card {
+              width: 100% !important;
+              margin-bottom: 0 !important;
+            }
+          }
+          @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid {
+              grid-template-columns: repeat(2, 1fr) !important;
+            }
+          }
+        `}
+      </style>
+      <div style={{
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        margin: 0,
+        padding: 0,
+        backgroundColor: '#f6f7f8',
+        minHeight: '100vh',
+        width: '100%'
+      }}>
       {/* Header */}
       <header style={{
         backgroundColor: 'white',
@@ -409,12 +430,15 @@ const App: React.FC = () => {
           }}>
             EVERYTHING YOU NEED
           </h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2rem',
-            width: '100%'
-          }}>
+          <div 
+            className="features-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.5rem',
+              width: '100%',
+              padding: '0 1rem'
+            }}>
             {[
               { icon: '⚡', color: '#fdda24', title: '5-Minute Setup' },
               { icon: '🎨', color: '#00a7b5', title: 'Fully Customizable' },
@@ -423,13 +447,18 @@ const App: React.FC = () => {
               { icon: '🌐', color: '#00a7b5', title: 'Multi-Network' },
               { icon: '📊', color: '#3b82f6', title: 'Transaction History' }
             ].map((item, index) => (
-              <div key={index} style={{
-                backgroundColor: 'white',
-                border: '1px solid #e5e7eb',
-                borderRadius: '0.5rem',
-                padding: '2rem',
-                textAlign: 'center'
-              }}>
+              <div 
+                key={index} 
+                className="feature-card"
+                style={{
+                  backgroundColor: 'white',
+                  border: '1px solid #e5e7eb',
+                  borderRadius: '0.5rem',
+                  padding: '2rem',
+                  textAlign: 'center',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                }}>
                 <div style={{
                   width: '3rem',
                   height: '3rem',
@@ -589,7 +618,8 @@ const App: React.FC = () => {
 
       {/* Review Transaction Modal */}
       <div ref={reviewModalRef} />
-    </div>
+      </div>
+    </>
   );
 };
 
